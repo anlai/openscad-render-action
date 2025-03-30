@@ -5,3 +5,40 @@ inputs:
     description: 'relative path to the openscad file'
     required: true
     default: ''
+  tag:
+    description: ''
+    required: false
+    default: 'compiled'
+
+runs:
+  using: "composite"
+  steps:
+  - name: Compile
+    id: compile
+    run: |
+      ./compile.sh "$SCAD_FILE" "$VERSION"
+
+      echo "scadfile=$SCAD_FILE-$VERSION.scad" >> $GITHUB_OUTPUT
+    shell: bash
+    env:
+      SCAD_FILE: ${{ inputs.scad-file }}
+      VERSION: ${{ inputs.version }}
+  - name: Render
+    id: render
+    run: |
+      ./render.sh "$COMPILED_SCAD_FILE" "$SCAD_FILE" "$VERSION"
+    shell: bash
+    env:
+      COMPILED_SCAD_FILE: ${{ steps.compile.outputs.scadfile }}
+      SCAD_FILE: ${{ inputs.scad-file }}
+      VERSION: ${{ inputs.version }}
+  - name: Move Artifacts
+    run: |
+      mkdir ./output
+      mv "$COMPILED_SCAD_FILE" ./output
+
+      name_without_extension="${filename%.*}"
+      mv "$name_without_extension*.stl" ./output
+    shell: bash
+    env:
+      COMPILED_SCAD_FILE: ${{ steps.compile.outputs.scadfile }}
