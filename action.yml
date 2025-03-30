@@ -13,6 +13,20 @@ inputs:
 runs:
   using: "composite"
   steps:
+  - name: Set Variables
+    id: set_variables
+    run: |
+      BASE_FILENAME="${SCAD_FILE%.*}"
+      VERSION="${TAG:-$(date +"%Y%m%d-%H")}"
+      VERSIONED_BASE_FILENAME="$BASE_FILENAME-$VERSION"
+      
+      echo "base_filename=$BASE_FILENAME" >> $GITHUB_OUTPUT
+      echo "version=$VERSION" >> $GITHUB_OUTPUT
+      echo "versioned_base_filename=$VERSIONED_BASE_FILENAME" >> $GITHUB_OUTPUT
+    shell: bash
+    env:
+      SCAD_FILE: ${{ inputs.scad-file }}
+      TAG: ${{ inputs.tag }}
   - name: Compile
     id: compile
     run: |
