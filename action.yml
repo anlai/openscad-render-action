@@ -18,11 +18,12 @@ runs:
     run: |
       ./compile.sh "$SCAD_FILE" "$VERSION"
 
-      echo "scadfile=$SCAD_FILE-$VERSION.scad" >> $GITHUB_OUTPUT
+      basefilename=$(basename $SCAD_FILE)
+      echo "scadfile=$basefilename-$VERSION.scad" >> $GITHUB_OUTPUT
     shell: bash
     env:
       SCAD_FILE: ${{ inputs.scad-file }}
-      VERSION: ${{ inputs.version }}
+      VERSION: ${{ inputs.tag }}
   - name: Render
     id: render
     run: |
@@ -31,7 +32,7 @@ runs:
     env:
       COMPILED_SCAD_FILE: ${{ steps.compile.outputs.scadfile }}
       SCAD_FILE: ${{ inputs.scad-file }}
-      VERSION: ${{ inputs.version }}
+      VERSION: ${{ inputs.tag }}
   - name: Move Artifacts
     run: |
       mkdir ./output
