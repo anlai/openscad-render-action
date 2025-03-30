@@ -1,0 +1,7 @@
+name: 'OpenSCAD Render'
+description: ''
+inputs:
+  scad-file:
+    description: 'relative path to the openscad file'
+    required: true
+    default: ''
