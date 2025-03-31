@@ -9,15 +9,6 @@ if [[ -z "$1" || -z "$2" || -z "$3" ]]; then
   exit 1
 fi
 
-# scadfile="$2"
-# tag="$3"
-
-# # Define the JSON file path
-# extension="${scadfile##*.}"
-# filename_no_ext="${scadfile%.$extension}"
-
-# JSON_FILE="${filename_no_ext}.json"
-
 # Check if jq is installed
 if ! command -v jq &> /dev/null
 then
