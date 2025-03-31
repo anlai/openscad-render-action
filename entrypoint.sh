@@ -22,12 +22,12 @@ pwd
 
 # compile
 echo "=== compilation ==="
-./compile.sh "$SCADFILE" "$OUTPUT_FILENAME"
+/compile.sh "$SCADFILE" "$OUTPUT_FILENAME"
 
 # render
 echo "=== render ==="
 SETTINGS_FILENAME="${SCADFILE%.*}.json"
-./render.sh "$OUTPUT_FILENAME" "$SETTINGS_FILENAME" "$VERSIONED_BASE_FILENAME"
+/render.sh "$OUTPUT_FILENAME" "$SETTINGS_FILENAME" "$VERSIONED_BASE_FILENAME"
 
 echo "=== move artifacts ==="
 mkdir ./output
