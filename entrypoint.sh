@@ -10,9 +10,6 @@ VERSION="${TAG:-$(date +"%Y%m%d-%H")}"
 VERSIONED_BASE_FILENAME="$BASE_FILENAME-$VERSION"
 OUTPUT_FILENAME="$VERSIONED_BASE_FILENAME.scad"
 
-echo "current directory"
-pwd
-
 # DEBUG OUTPUT
 # echo "scadfile: $SCADFILE"
 # echo "tag: $TAG"
@@ -32,6 +29,3 @@ SETTINGS_FILENAME="${SCADFILE%.*}.json"
 echo "=== move artifacts ==="
 mkdir ./output
 mv $VERSIONED_BASE_FILENAME* ./output
-
-ls
-ls ./output
