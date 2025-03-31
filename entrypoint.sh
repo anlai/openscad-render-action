@@ -1,6 +1,9 @@
 #!/bin/bash
 
-echo "scadfile: $1"
-echo "tag: $2"
+scadfile=$1
+tag=$2
+
+echo "scadfile: $scadfile"
+echo "tag: $tag"
 
 ls
