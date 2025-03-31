@@ -2,16 +2,21 @@
 
 # Parameters
 inputFile="$1"
-tag="${2:-$(date +"%Y%m%d-%H")}"
+outputFile="$2"
 
-echo "Compiling file: $inputFile with tag $tag"
-echo ""
+if [[ -z "$1" || -z "$2" ]]; then
+  echo "Error: missing parameters.  usage: compile.sh {input filename} {output filename}" >&2
+  exit 1
+fi
 
+echo "compiling $inputFile"
+
+# constants
 line_pattern='(include|use)\s*<(.+?)>'
 comment_pattern='^\s*//'
 
-pathRoot=$(dirname "$0")
-inputFilename=$(basename "$1")
+# pathRoot=$(dirname "$0")
+# inputFilename=$(basename "$1")
 dependencies=()
 
 function find_dependencies {
@@ -74,7 +79,7 @@ function process_file {
     done < "$filepath"
 }
 
-function addd_empty_line {
+function add_empty_line {
     local filepath=$1
 
     # Check if the last line is empty
@@ -83,22 +88,29 @@ function addd_empty_line {
     fi
 }
 
-find_dependencies $pathRoot $inputFile 0
+# discover dependencies
+inputPathRoot=$(dirname $inputFile)
+find_dependencies $inputPathRoot $inputFile 0
 
-echo "==output=="
-outputFilename=$(echo "$inputFilename" | sed 's/\.[^.]*$//')
-outputPath="$outputFilename-$tag.scad"
+# echo "==output=="
+# outputFilename=$(echo "$inputFilename" | sed 's/\.[^.]*$//')
+# outputPath="$outputFilename-$tag.scad"
 
 sorted=$(printf "%s\n" "${dependencies[@]}" | jq -s 'sort_by(.depth) | reverse | unique_by(.path) | .[].path')
 
-addd_empty_line "$inputFile"
-process_file "$inputFile" "$outputPath" true
+# process just the customizer parameters
+add_empty_line "$inputFile"
+process_file "$inputFile" "$outputFile" true
+
+# process each dependency
 for f in $sorted; do
     unquoted=${f//\"/}
-    addd_empty_line "$unquoted"
-    process_file "$unquoted" "$outputPath" false
+    add_empty_line "$unquoted"
+    process_file "$unquoted" "$outputFile" false
 done
-process_file "$inputFile" "$outputPath" false
 
-echo "result written to: $outputPath"
+# process the body of the main input file
+process_file "$inputFile" "$outputFile" false
+
+echo "result written to: $outputFile"
 echo "done"
