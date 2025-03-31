@@ -10,7 +10,8 @@ VERSION="${TAG:-$(date +"%Y%m%d-%H")}"
 VERSIONED_BASE_FILENAME="$BASE_FILENAME-$VERSION"
 OUTPUT_FILENAME="$VERSIONED_BASE_FILENAME.scad"
 
-
+echo "current directory"
+pwd
 
 # DEBUG OUTPUT
 # echo "scadfile: $SCADFILE"
@@ -21,7 +22,7 @@ OUTPUT_FILENAME="$VERSIONED_BASE_FILENAME.scad"
 
 # compile
 echo "=== compilation ==="
-./compile "$SCADFILE" "$OUTPUT_FILENAME"
+./compile.sh "$SCADFILE" "$OUTPUT_FILENAME"
 
 # render
 echo "=== render ==="
