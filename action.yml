@@ -10,12 +10,19 @@ inputs:
     required: false
     default: 'compiled'
 
+# runs:
+#   using: 'docker'
+#   image: 'Dockerfile'
+#   args:
+#   - ${{ inputs.scad-file }}
+#   - ${{ inputs.tag }}
+
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-  - ${{ inputs.scad-file }}
-  - ${{ inputs.tag }}
+  using: 'composite'
+  steps:
+  - run: |
+      pwd
+      ls
 
 # runs:
 #   using: "composite"
