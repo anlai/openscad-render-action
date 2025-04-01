@@ -33,6 +33,10 @@ runs:
     run: |
       ls $GITHUB_ACTION_PATH
     shell: bash
+  
+  - name: build container
+    run: docker build -t openscad "$GITHUB_ACTION_PATH"
+    shell: bash
 
 # runs:
 #   using: "composite"
