@@ -25,6 +25,10 @@ runs:
       pwd
       ls
     shell: bash
+  - name: output action path
+    run: |
+      echo "$GITHUB_ACTION_PATH"
+    shell: bash
 
 # runs:
 #   using: "composite"
