@@ -44,6 +44,10 @@ runs:
     env:
       SCAD_VERSION: ${{ inputs.openscad-version }}
 
+  - name: run openscad build & render
+    run: docker run -v "./:/github/workspace" -w "/github/workspace" openscad
+    shell: bash
+
 # runs:
 #   using: "composite"
 #   steps:
