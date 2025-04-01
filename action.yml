@@ -29,6 +29,10 @@ runs:
     run: |
       echo "$GITHUB_ACTION_PATH"
     shell: bash
+  - name: action path contents
+    run: |
+      ls $GITHUB_ACTION_PATH
+    shell: bash
 
 # runs:
 #   using: "composite"
