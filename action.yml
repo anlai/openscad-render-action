@@ -9,6 +9,10 @@ inputs:
     description: ''
     required: false
     default: 'compiled'
+  openscad-version:
+    description: ''
+    required: false
+    default: 'latest'
 
 # runs:
 #   using: 'docker'
@@ -35,8 +39,10 @@ runs:
     shell: bash
   
   - name: build container
-    run: docker build -t openscad "$GITHUB_ACTION_PATH"
+    run: docker build --build-arg "$SCAD_VERSION" -t openscad "$GITHUB_ACTION_PATH"
     shell: bash
+    env:
+      SCAD_VERSION: ${{ inputs.openscad-version }}
 
 # runs:
 #   using: "composite"

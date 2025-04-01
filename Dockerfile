@@ -1,4 +1,6 @@
-FROM openscad/openscad:dev.2025-02-17
+ARG SCAD_VERSION='latest'
+
+FROM openscad/openscad:${SCAD_VERSION}
 
 COPY entrypoint.sh /entrypoint.sh
 COPY compile.sh /compile.sh
