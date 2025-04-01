@@ -15,8 +15,6 @@ echo "compiling $inputFile"
 line_pattern='(include|use)\s*<(.+?)>'
 comment_pattern='^\s*//'
 
-# pathRoot=$(dirname "$0")
-# inputFilename=$(basename "$1")
 dependencies=()
 
 function find_dependencies {
@@ -91,10 +89,6 @@ function add_empty_line {
 # discover dependencies
 inputPathRoot=$(dirname $inputFile)
 find_dependencies $inputPathRoot $inputFile 0
-
-# echo "==output=="
-# outputFilename=$(echo "$inputFilename" | sed 's/\.[^.]*$//')
-# outputPath="$outputFilename-$tag.scad"
 
 sorted=$(printf "%s\n" "${dependencies[@]}" | jq -s 'sort_by(.depth) | reverse | unique_by(.path) | .[].path')
 
