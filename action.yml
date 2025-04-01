@@ -45,8 +45,11 @@ runs:
       SCAD_VERSION: ${{ inputs.openscad-version }}
 
   - name: run openscad build & render
-    run: docker run -v "./:/github/workspace" -w "/github/workspace" openscad
+    run: docker run -v "./:/github/workspace" -w "/github/workspace" openscad "$SCAD_FILE" "$TAG"
     shell: bash
+    env:
+      SCAD_FILE: ${{ inputs.scad-file }}
+      TAG: ${{ inputs.tag }}
 
 # runs:
 #   using: "composite"
