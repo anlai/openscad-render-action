@@ -6,11 +6,11 @@ inputs:
     required: true
     default: ''
   tag:
-    description: ''
+    description: 'value to use to tag compiled and rendered files'
     required: false
     default: 'compiled'
   openscad-version:
-    description: ''
+    description: 'openscad version to use to render files, based on dockerhub tags for openscad image'
     required: false
     default: 'latest'
 
